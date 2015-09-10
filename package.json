@@ -13,7 +13,8 @@
   },
   "main": "react-autosuggest.jsx",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "build": "cjsx -c ./react-autosuggest.cjsx"
   },
   "repository": {
     "type": "git",
