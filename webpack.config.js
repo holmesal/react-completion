@@ -18,7 +18,7 @@ module.exports = {
 		modulesDirectories: ['node_modules']
 	},
 	resolve: {
-		extensions: ['', '.js', '.cjsx', '.coffee']
+		extensions: ['', '.cjsx', '.js', '.coffee']
 	},
   plugins: [
   ],
