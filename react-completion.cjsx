@@ -15,12 +15,13 @@ Autosuggest = React.createClass
 		{
 			suggestions: []
 			acceptOnTab: true
+			value: ''
 			onChange: ->
 			onAccept: ->
-			onTab: ->
-			onFilter: ->
-			textStyle: {}
-			suggestionStyle: {}
+			# onTab: ->
+			# onFilter: ->
+			# textStyle: {}
+			# suggestionStyle: {}
 
 		}
 

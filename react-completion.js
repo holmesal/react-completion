@@ -14,12 +14,9 @@
       return {
         suggestions: [],
         acceptOnTab: true,
+        value: '',
         onChange: function() {},
-        onAccept: function() {},
-        onTab: function() {},
-        onFilter: function() {},
-        textStyle: {},
-        suggestionStyle: {}
+        onAccept: function() {}
       };
     },
     getInitialState: function() {
