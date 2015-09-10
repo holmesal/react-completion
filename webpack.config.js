@@ -4,7 +4,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './examples/index'
+    './examples/app.jsx'
   ],
   devServer: {
     contentBase: './examples/',
@@ -26,6 +26,7 @@ module.exports = {
 		loaders: [
       { test: /\.css$/, loaders: ['style', 'css']},
       { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
+      { test: /\.jsx$/, loader: 'babel'},
       { test: /\.coffee$/, loader: 'coffee' }
     ]
   }
