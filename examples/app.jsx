@@ -1,5 +1,7 @@
 var React = require('react');
-var Autosuggest = require('../react-autosuggest');
+var Completion = require('../react-completion');
+var states = require('./states.json');
+console.info(states)
 
 var Example = React.createClass({
 
@@ -23,10 +25,9 @@ var Example = React.createClass({
 	},
 
 	render: function() {
-		var states = ['Alabama', 'Arkansas'];
 		return (
 			<div style={this.style.wrapper}>
-				<Autosuggest suggestions={states} value={this.state.text} onChange={this.handleChange} onAccept={this.handleAccept}/>
+				<Completion suggestions={states} value={this.state.text} onChange={this.handleChange} onAccept={this.handleAccept}/>
 			</div>
 		);
 	},

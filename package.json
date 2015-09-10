@@ -1,27 +1,28 @@
 {
-  "name": "react-autosuggest",
+  "name": "react-completion",
   "version": "0.0.1",
-  "description": "A sweet autosuggest react component.",
+  "description": "A react component that displays suggestions inline as you type.",
   "devDependencies": {
     "babel-core": "^5.8.23",
     "babel-loader": "^5.3.2",
     "cjsx-loader": "^2.0.1",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
+    "json-loader": "^0.5.2",
     "react": "^0.13.3",
     "webpack": "^1.12.1"
   },
-  "main": "react-autosuggest.jsx",
+  "main": "react-completion.jsx",
   "scripts": {
     "test": "npm test",
-    "build": "cjsx -c ./react-autosuggest.cjsx"
+    "build": "cjsx -c ./react-completion.cjsx"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holmesal/react-autosuggest.git"
+    "url": "git+https://github.com/holmesal/react-completion.git"
   },
   "keywords": [
-    "react-autosuggest",
+    "react-completion",
     "autocomplete",
     "react",
     "auto"
@@ -29,7 +30,7 @@
   "author": "Alonso Holmes <hello@alonso.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/holmesal/react-autosuggest/issues"
+    "url": "https://github.com/holmesal/react-completion/issues"
   },
-  "homepage": "https://github.com/holmesal/react-autosuggest#readme"
+  "homepage": "https://github.com/holmesal/react-completion#readme"
 }
