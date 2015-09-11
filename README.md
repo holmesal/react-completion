@@ -10,6 +10,8 @@ Get completion suggestions in-line, as you type.
 
 ## Example
 
+[Live demo](https://jsfiddle.net/aulizko/8gs43etv/embedded/result/)
+
 [view source](./examples/app.jsx)
 
 ```javascript
@@ -53,6 +55,17 @@ var Example = React.createClass({
 });
 
 React.render(<Example/>, document.getElementById('app'));
+```
+
+### Run
+
+To run examples on the local machine:
+
+```
+$ git clone git@github.com:holmesal/react-completion.git
+$ cd react-completition
+$ npm install
+$ npm run example
 ```
 
 ## Properties
