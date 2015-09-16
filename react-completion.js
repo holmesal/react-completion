@@ -14,9 +14,12 @@
       return {
         suggestions: [],
         acceptOnTab: true,
+        acceptOnEnter: true,
         value: '',
         onChange: function() {},
-        onAccept: function() {}
+        onAccept: function() {},
+        onKeyDown: function() {},
+        onBlur: function() {}
       };
     },
     getInitialState: function() {
@@ -49,13 +52,24 @@
         case 'Tab':
           if (this.props.acceptOnTab) {
             ev.preventDefault();
-            return this.props.onAccept(this.state.suggestion);
+            if (this.state.suggestion) {
+              this.props.onAccept(this.state.suggestion);
+            }
+          }
+          break;
+        case 'Enter':
+          if (this.props.acceptOnEnter) {
+            ev.preventDefault();
+            if (this.state.suggestion) {
+              this.props.onAccept(this.state.suggestion);
+            }
           }
           break;
         case 'ArrowUp':
         case 'ArrowDown':
-          return console.info('TODO - implement up/down arrow key switching');
+          console.info('TODO - implement up/down arrow key switching');
       }
+      return this.props.onKeyDown(ev);
     },
     updateInputTextStyle: function() {
       var cloned, computed, node, offsets, ref;
@@ -106,6 +120,16 @@
       }
       return style;
     },
+    getInputStyle: function() {
+      var k, ref, style, v;
+      style = this.style.input;
+      ref = this.props.style;
+      for (k in ref) {
+        v = ref[k];
+        style[k] = v;
+      }
+      return style;
+    },
     getSuggestion: function(text) {
       var i, len, ref, suggestion;
       text = text.toLowerCase();
@@ -119,6 +143,9 @@
         }
       }
     },
+    focus: function() {
+      return React.findDOMNode(this.refs.input).focus();
+    },
     renderSuggestion: function() {
       if (this.state.suggestion) {
         return this.state.suggestion.toLowerCase().replace(this.state.value.toLowerCase(), '');
@@ -127,14 +154,14 @@
     render: function() {
       return React.createElement("div", {
         "style": this.style.wrapper
-      }, React.createElement("input", {
+      }, React.createElement("input", React.__spread({}, this.props, {
         "ref": "input",
         "type": "text",
-        "style": this.style.input,
+        "style": this.getInputStyle(),
         "value": this.state.value,
         "onChange": this.handleChange,
         "onKeyDown": this.handleKeyDown
-      }), React.createElement("div", {
+      })), React.createElement("div", {
         "style": this.getSuggestionStyle(),
         "onClick": this.handleSuggestionClick
       }, this.renderSuggestion()), React.createElement("pre", {
@@ -164,7 +191,8 @@
         width: '100%',
         display: 'block',
         boxSizing: 'border-box',
-        opacity: 1
+        opacity: 1,
+        padding: 10
       },
       suggestion: {
         position: 'absolute',

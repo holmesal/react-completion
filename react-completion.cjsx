@@ -15,14 +15,12 @@ Autosuggest = React.createClass
 		{
 			suggestions: []
 			acceptOnTab: true
+			acceptOnEnter: true
 			value: ''
 			onChange: ->
 			onAccept: ->
-			# onTab: ->
-			# onFilter: ->
-			# textStyle: {}
-			# suggestionStyle: {}
-
+			onKeyDown: ->
+			onBlur: ->
 		}
 
 	getInitialState: ->
@@ -54,9 +52,15 @@ Autosuggest = React.createClass
 			when 'Tab'
 				if @props.acceptOnTab
 					ev.preventDefault()
-					@props.onAccept @state.suggestion
+					@props.onAccept @state.suggestion if @state.suggestion
+			when 'Enter'
+				if @props.acceptOnEnter
+					ev.preventDefault()
+					@props.onAccept @state.suggestion if @state.suggestion
 			when 'ArrowUp', 'ArrowDown'
 				console.info 'TODO - implement up/down arrow key switching'
+
+		@props.onKeyDown ev
 
 	updateInputTextStyle: ->
 		node = @refs.input?.getDOMNode()
@@ -98,6 +102,12 @@ Autosuggest = React.createClass
 			style[k] = v
 		style
 
+	getInputStyle: ->
+		style = @style.input
+		for k,v of @props.style
+			style[k] = v
+		style
+
 	getSuggestion: (text) ->
 		text = text.toLowerCase()
 		if text
@@ -105,13 +115,16 @@ Autosuggest = React.createClass
 				if suggestion.toLowerCase().indexOf(text) is 0
 					return suggestion
 
+	focus: ->
+		React.findDOMNode(@refs.input).focus()
+
 	renderSuggestion: ->
 		if @state.suggestion
 			@state.suggestion.toLowerCase().replace @state.value.toLowerCase(), ''
 
 	render: ->
 		<div style={@style.wrapper}>
-			<input ref="input" type="text" style={@style.input} value={@state.value} onChange={@handleChange} onKeyDown={@handleKeyDown}></input>
+			<input {...@props} ref="input" type="text" style={@getInputStyle()} value={@state.value} onChange={@handleChange} onKeyDown={@handleKeyDown}></input>
 			<div style={@getSuggestionStyle()} onClick={@handleSuggestionClick}>{@renderSuggestion()}</div>
 			<pre style={@getRulerWrapperStyle()}>
 				<span style={@style.ruler} ref="ruler">{@state.value}</span>
@@ -128,7 +141,6 @@ Autosuggest = React.createClass
 
 	style:
 		wrapper:
-			# padding: 6
 			overflow: 'auto'
 			whiteSpace: 'nowrap'
 			position: 'relative'
@@ -138,15 +150,14 @@ Autosuggest = React.createClass
 			display: 'block'
 			boxSizing: 'border-box'
 			opacity: 1
+			padding: 10
 
 		suggestion:
 			position: 'absolute'
 			top: 0
-			# marginLeft: 6
 			display: 'flex'
 			flexDirection: 'column'
 			justifyContent: 'center'
-			# backgroundColor: 'green'
 			opacity: 0.5
 
 		rulerWrapper:
