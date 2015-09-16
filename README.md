@@ -33,6 +33,10 @@ var Example = React.createClass({
 		});
 	},
 
+	handleSuggestionChange: function(suggestion) {
+		console.info('the suggestion changed to ' + suggestion);
+	},
+
 	handleAccept: function(suggestion) {
 		console.info('the user accepted the suggestion: ' + suggestion);
 		this.setState({
@@ -42,15 +46,16 @@ var Example = React.createClass({
 
 	render: function() {
 		return (
-			<div>
+			<div style={this.style.wrapper}>
 				<Completion
 					suggestions={states}
 					value={this.state.text}
 					onChange={this.handleChange}
-					onAccept={this.handleAccept}/>
+					onSuggestionChange={this.handleSuggestionChange}
+					onSuggestionAccept={this.handleAccept}/>
 			</div>
 		);
-	}
+	},
 
 });
 
@@ -70,19 +75,23 @@ $ npm run example
 
 ## Properties
 
-This API aims to align as closely as possible with the native `<input>`.
+This component wraps an `<input>`, so **all input-compatible properties are supported**. Note the use of the `onChange` property in the above example.
 
-`suggestions` (*Array of Strings*) - the suggestions to be matched.
+`suggestions` *Array of Strings* **required** - the suggestions to be matched
 
-`value` *String* - the text value of the input
+`value` *String* **required** - the text value of the input
 
-`onChange(ev)` - called when the input value changes. 
+`acceptOnEnter` *Boolean* (default `true`) - hitting the Enter key will accept the current suggestion
 
-`onAccept(suggestion)` - called when the user accepts a suggestion by pressing tab.
+`acceptOnTab` *Boolean* (default `true`) - hitting the Tab key will accept the current suggestion
+
+`onSuggestionChange(suggestion)` - called when the suggestion changes.
+
+`onSuggestionAccept(suggestion)` - called when the user accepts a suggestion by pressing tab.
 
 ## todo
 
 * Add support for uncontrolled components
-* Add props to style the textarea
-* Add prop to control suggestion styles
+* Add props to style the `<input>` and suggestion styles
 * Add the ability to cycle through suggestions with the up/down arrow keys
+* Unit testssssssssss

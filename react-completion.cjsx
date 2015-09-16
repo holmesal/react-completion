@@ -8,8 +8,15 @@ Autosuggest = React.createClass
 		value: React.PropTypes.string
 		# An array of possible suggestions
 		suggestions: React.PropTypes.array.isRequired
-		# if true, accept the current suggestion when the tab key is pressed. fires `onAccept`
+		# if true, accept the current suggestion when the Tab key is pressed.
 		acceptOnTab: React.PropTypes.bool
+		# if true, accept the current suggestion when the Enter key is pressed.
+		acceptOnEnter: React.PropTypes.bool
+
+		# Fired when the suggestion changes
+		onSuggestionChange: React.PropTypes.func
+		# Fired when the user accepts the suggestion
+		onSuggestionAccept: React.PropTypes.func
 
 	getDefaultProps: ->
 		{
@@ -17,10 +24,8 @@ Autosuggest = React.createClass
 			acceptOnTab: true
 			acceptOnEnter: true
 			value: ''
-			onChange: ->
-			onAccept: ->
-			onKeyDown: ->
-			onBlur: ->
+			onSuggestionChange: ->
+			onSuggestionAccept: ->
 		}
 
 	getInitialState: ->
@@ -37,12 +42,16 @@ Autosuggest = React.createClass
 		# @updateSuggestionPosition()
 
 	componentWillReceiveProps: (nextProps) ->
+		# Compute a suggestion for this new value
+		suggestion = @getSuggestion nextProps.value
+
 		@setState
 			value: nextProps.value
-			suggestion: @getSuggestion nextProps.value
+			suggestion: suggestion
 
-	handleChange: (ev) ->
-		@props.onChange ev
+		# If this isn't what we previously computed, fire a callback
+		unless suggestion is @state.suggestion
+			@props.onSuggestionChange? suggestion
 
 	handleSuggestionClick: ->
 		@refs.input.getDOMNode().focus()
@@ -52,15 +61,15 @@ Autosuggest = React.createClass
 			when 'Tab'
 				if @props.acceptOnTab
 					ev.preventDefault()
-					@props.onAccept @state.suggestion if @state.suggestion
+					@props.onSuggestionAccept @state.suggestion if @state.suggestion
 			when 'Enter'
 				if @props.acceptOnEnter
 					ev.preventDefault()
-					@props.onAccept @state.suggestion if @state.suggestion
+					@props.onSuggestionAccept @state.suggestion if @state.suggestion
 			when 'ArrowUp', 'ArrowDown'
 				console.info 'TODO - implement up/down arrow key switching'
 
-		@props.onKeyDown ev
+		@props.onKeyDown? ev
 
 	updateInputTextStyle: ->
 		node = @refs.input?.getDOMNode()
@@ -124,7 +133,7 @@ Autosuggest = React.createClass
 
 	render: ->
 		<div style={@style.wrapper}>
-			<input {...@props} ref="input" type="text" style={@getInputStyle()} value={@state.value} onChange={@handleChange} onKeyDown={@handleKeyDown}></input>
+			<input {...@props} ref="input" type="text" style={@getInputStyle()} value={@state.value} onKeyDown={@handleKeyDown}></input>
 			<div style={@getSuggestionStyle()} onClick={@handleSuggestionClick}>{@renderSuggestion()}</div>
 			<pre style={@getRulerWrapperStyle()}>
 				<span style={@style.ruler} ref="ruler">{@state.value}</span>

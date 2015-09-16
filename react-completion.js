@@ -8,7 +8,10 @@
     propTypes: {
       value: React.PropTypes.string,
       suggestions: React.PropTypes.array.isRequired,
-      acceptOnTab: React.PropTypes.bool
+      acceptOnTab: React.PropTypes.bool,
+      acceptOnEnter: React.PropTypes.bool,
+      onSuggestionChange: React.PropTypes.func,
+      onSuggestionAccept: React.PropTypes.func
     },
     getDefaultProps: function() {
       return {
@@ -16,10 +19,8 @@
         acceptOnTab: true,
         acceptOnEnter: true,
         value: '',
-        onChange: function() {},
-        onAccept: function() {},
-        onKeyDown: function() {},
-        onBlur: function() {}
+        onSuggestionChange: function() {},
+        onSuggestionAccept: function() {}
       };
     },
     getInitialState: function() {
@@ -36,24 +37,27 @@
       return this.updateInputTextStyle();
     },
     componentWillReceiveProps: function(nextProps) {
-      return this.setState({
+      var base, suggestion;
+      suggestion = this.getSuggestion(nextProps.value);
+      this.setState({
         value: nextProps.value,
-        suggestion: this.getSuggestion(nextProps.value)
+        suggestion: suggestion
       });
-    },
-    handleChange: function(ev) {
-      return this.props.onChange(ev);
+      if (suggestion !== this.state.suggestion) {
+        return typeof (base = this.props).onSuggestionChange === "function" ? base.onSuggestionChange(suggestion) : void 0;
+      }
     },
     handleSuggestionClick: function() {
       return this.refs.input.getDOMNode().focus();
     },
     handleKeyDown: function(ev) {
+      var base;
       switch (ev.key) {
         case 'Tab':
           if (this.props.acceptOnTab) {
             ev.preventDefault();
             if (this.state.suggestion) {
-              this.props.onAccept(this.state.suggestion);
+              this.props.onSuggestionAccept(this.state.suggestion);
             }
           }
           break;
@@ -61,7 +65,7 @@
           if (this.props.acceptOnEnter) {
             ev.preventDefault();
             if (this.state.suggestion) {
-              this.props.onAccept(this.state.suggestion);
+              this.props.onSuggestionAccept(this.state.suggestion);
             }
           }
           break;
@@ -69,7 +73,7 @@
         case 'ArrowDown':
           console.info('TODO - implement up/down arrow key switching');
       }
-      return this.props.onKeyDown(ev);
+      return typeof (base = this.props).onKeyDown === "function" ? base.onKeyDown(ev) : void 0;
     },
     updateInputTextStyle: function() {
       var cloned, computed, node, offsets, ref;
@@ -159,7 +163,6 @@
         "type": "text",
         "style": this.getInputStyle(),
         "value": this.state.value,
-        "onChange": this.handleChange,
         "onKeyDown": this.handleKeyDown
       })), React.createElement("div", {
         "style": this.getSuggestionStyle(),

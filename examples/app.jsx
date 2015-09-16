@@ -16,6 +16,10 @@ var Example = React.createClass({
 		});
 	},
 
+	handleSuggestionChange: function(suggestion) {
+		console.info('the suggestion changed to ' + suggestion);
+	},
+
 	handleAccept: function(suggestion) {
 		console.info('the user accepted the suggestion: ' + suggestion);
 		this.setState({
@@ -30,7 +34,8 @@ var Example = React.createClass({
 					suggestions={states}
 					value={this.state.text}
 					onChange={this.handleChange}
-					onAccept={this.handleAccept}/>
+					onSuggestionChange={this.handleSuggestionChange}
+					onSuggestionAccept={this.handleAccept}/>
 			</div>
 		);
 	},
