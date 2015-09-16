@@ -1,6 +1,6 @@
 {
   "name": "react-completion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A react component that displays suggestions inline as you type.",
   "devDependencies": {
     "babel-core": "^5.8.23",
