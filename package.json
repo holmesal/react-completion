@@ -17,7 +17,7 @@
   "scripts": {
     "test": "npm test",
     "build": "cjsx -c ./react-completion.cjsx",
-		"example": "webpack-dev-server"
+    "example": "webpack-dev-server"
   },
   "repository": {
     "type": "git",

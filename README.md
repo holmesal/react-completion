@@ -2,7 +2,7 @@
 
 Get completion suggestions in-line, as you type.
 
-(insert sweet gif here)
+![sweet gif](http://zippy.gfycat.com/GrouchyRewardingInvisiblerail.gif)
 
 ## Install
 
