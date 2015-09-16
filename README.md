@@ -12,7 +12,7 @@ Get completion suggestions in-line, as you type.
 
 ## Example
 
-[Live demo](https://jsfiddle.net/aulizko/8gs43etv/embedded/result/)
+[Live demo](http://holmesal.github.io/react-completion)
 
 [view source](./examples/app.jsx)
 
@@ -90,6 +90,20 @@ This component wraps an `<input>`, so **all input-compatible properties are supp
 * `onSuggestionChange(suggestion)` - called when the suggestion changes.
 
 * `onSuggestionAccept(suggestion)` - called when the user accepts a suggestion by pressing tab.
+
+## Gotchas
+
+### `.focus()`
+
+Because you're asking a react component to `.focus()` instead of an HTML element, you need to use the form 
+
+`this.refs.yourCompletionRef.focus()` 
+
+instead of 
+
+`React.findDOMNode(this.refs.yourCompletionRef).focus()`.
+
+Exposing component functions [doesn't seem especially encouraged in the docs](https://facebook.github.io/react/tips/expose-component-functions.html). Have a better idea for this API? Send a PR!
 
 ## todo
 

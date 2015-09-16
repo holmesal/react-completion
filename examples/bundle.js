@@ -60,22 +60,32 @@
 	var Example = React.createClass({
 		displayName: 'Example',
 
+		// This is a controlled component, so we'll be managing the value of the input ourselves
 		getInitialState: function getInitialState() {
 			return {
 				text: ''
 			};
 		},
 
+		// Focus on the input when the component mounts
+		componentDidMount: function componentDidMount() {
+			this.refs.input.focus();
+		},
+
+		// When the input value changes, update our state
 		handleChange: function handleChange(ev) {
 			this.setState({
 				text: ev.target.value
 			});
 		},
 
+		// Called when the suggestion changes
 		handleSuggestionChange: function handleSuggestionChange(suggestion) {
 			console.info('the suggestion changed to ' + suggestion);
 		},
 
+		// Called when the user accepts a suggestion by pressing Tab or Enter
+		// For this example, we'll just update the text value to the accepted suggestion
 		handleSuggestionAccept: function handleSuggestionAccept(suggestion) {
 			console.info('the user accepted the suggestion: ' + suggestion);
 			this.setState({
@@ -88,11 +98,17 @@
 				'div',
 				{ style: this.style.wrapper },
 				React.createElement(Completion, {
+					ref: 'input',
 					suggestions: states,
 					value: this.state.text,
 					onChange: this.handleChange,
 					onSuggestionChange: this.handleSuggestionChange,
-					onSuggestionAccept: this.handleSuggestionAccept })
+					onSuggestionAccept: this.handleSuggestionAccept }),
+				React.createElement(
+					'p',
+					{ style: { fontSize: 14, marginTop: 60 } },
+					'(start typing the name of a U.S. state)'
+				)
 			);
 		},
 
@@ -102,10 +118,9 @@
 				height: '100%',
 				display: 'flex',
 				fontSize: '24px',
-				flexDirection: 'row',
+				flexDirection: 'column',
 				alignItems: 'center',
-				justifyContent: 'center',
-				fontFamily: 'Avenir'
+				justifyContent: 'center'
 			}
 		}
 
