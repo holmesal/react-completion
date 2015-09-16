@@ -4,6 +4,8 @@ Get completion suggestions in-line, as you type.
 
 ![sweet gif](http://zippy.gfycat.com/GrouchyRewardingInvisiblerail.gif)
 
+**This is still verrrrrrrry beta, and the api is subject to change. Please, don't use in critical financial infrastructure quite yet.**
+
 ## Install
 
 `npm install --save react-completion`
@@ -37,7 +39,7 @@ var Example = React.createClass({
 		console.info('the suggestion changed to ' + suggestion);
 	},
 
-	handleAccept: function(suggestion) {
+	handleSuggestionAccept: function(suggestion) {
 		console.info('the user accepted the suggestion: ' + suggestion);
 		this.setState({
 			text: suggestion
@@ -77,17 +79,17 @@ $ npm run example
 
 This component wraps an `<input>`, so **all input-compatible properties are supported**. Note the use of the `onChange` property in the above example.
 
-`suggestions` *Array of Strings* **required** - the suggestions to be matched
+* `suggestions` *Array of Strings* **required** - the suggestions to be matched
 
-`value` *String* **required** - the text value of the input
+* `value` *String* **required** - the text value of the input
 
-`acceptOnEnter` *Boolean* (default `true`) - hitting the Enter key will accept the current suggestion
+* `acceptOnEnter` *Boolean* (default `true`) - hitting the Enter key will accept the current suggestion
 
-`acceptOnTab` *Boolean* (default `true`) - hitting the Tab key will accept the current suggestion
+* `acceptOnTab` *Boolean* (default `true`) - hitting the Tab key will accept the current suggestion
 
-`onSuggestionChange(suggestion)` - called when the suggestion changes.
+* `onSuggestionChange(suggestion)` - called when the suggestion changes.
 
-`onSuggestionAccept(suggestion)` - called when the user accepts a suggestion by pressing tab.
+* `onSuggestionAccept(suggestion)` - called when the user accepts a suggestion by pressing tab.
 
 ## todo
 
